@@ -26,8 +26,9 @@
     "test:watch": "jest --watch --notify --notifyMode=change --coverage",
     "locktt": "locktt",
     "lint": "eslint .",
-    "lint-final": "prettier -l src/** test/**/*.js && eslint .",
-    "prepublish": "yarn lint && yarn test"
+    "prettier": "prettier -l src/** test/**/*.js",
+    "lint-final": "npm run prettier && npm run lint",
+    "prepublish": "npm run lint && npm run test"
   },
   "dependencies": {
     "fetch": "^1.1.0",
@@ -51,7 +52,7 @@
     "lock-treatment-tool": "^0.4.1",
     "nock": "^12.0.0",
     "nodemon": "^2.0.0",
-    "prettier": "^2.0.5",
+    "prettier": "2.0.5",
     "smee-client": "^1.1.0"
   },
   "engines": {
