@@ -12,7 +12,7 @@ async function isFirstPR(context) {
           creator: context.payload.pull_request.user.login
         })
       )
-    ).data.filter(data => data.pull_request).length) !== 1
+    ).data.filter(data => data.pull_request).length) === 1
   );
 }
 
