@@ -21,7 +21,7 @@ test("isFirstPR true", async () => {
   expect(result);
 });
 
-test("isFirstPR true", async () => {
+test("isFirstPR false", async () => {
   // Arrange
   const context = {
     repo: jest.fn(() => "repo"),
