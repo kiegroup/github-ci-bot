@@ -5,11 +5,11 @@ const { getChangedFiles } = require("./utils");
  * driver function to ask for reviews on the PR, gets all the required reviewers(defined in reviewers.yml) relevant to PR by getPossibleReviewers.
  * @param {string} context The context from which the PR is coming from
  */
-async function askToReview(context) {
+async function askToReview(context, diff_url, user) {
   const reviewersInfo = await context.config("bot-files/reviewers.yml");
   context.github.pulls.createReviewRequest(
     context.issue({
-      reviewers: await getPossibleReviewers(context, reviewersInfo)
+      reviewers: await getPossibleReviewers(reviewersInfo, diff_url, user)
     })
   );
 }
@@ -19,8 +19,8 @@ async function askToReview(context) {
  * @param {Object} reviewersInfo The parsed yaml defined in reviewers.yml
  * @returns {Array} All the required reviewers
  */
-async function getPossibleReviewers(context, reviewersInfo) {
-  const changedFiles = await getChangedFiles(context);
+async function getPossibleReviewers(reviewersInfo, diff_url, user) {
+  const changedFiles = await getChangedFiles(diff_url);
   const pathReviewersSet = reviewersInfo.review
     .filter(reviewPath =>
       reviewPath.paths
@@ -32,7 +32,7 @@ async function getPossibleReviewers(context, reviewersInfo) {
 
   return reviewersInfo.default
     .concat(Array.from(pathReviewersSet))
-    .filter(reviewer => reviewer !== context.payload.pull_request.user.login);
+    .filter(reviewer => reviewer !== user);
 }
 
 module.exports = {

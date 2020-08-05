@@ -6,9 +6,9 @@ const { getChangedFiles } = require("./utils");
  * @param {string} context - The context from which the PR is coming from
  * @returns {boolean} true/false depending on the method logic
  */
-async function isCIRequired(context) {
+async function isCIRequired(context, diff_url) {
   const triggerPaths = await context.config("bot-files/paths.yml");
-  const changedFiles = await getChangedFiles(context);
+  const changedFiles = await getChangedFiles(diff_url);
 
   return (
     triggerPaths.files
