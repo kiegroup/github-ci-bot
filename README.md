@@ -29,6 +29,7 @@ npm install
 # Run the bot
 npm start
 ```
+
 **Note**: On the initial setup the bot creates a `.env` file in your project root which has all the secrets and webhook required for your bot to work with github. However you can create that file yourself. For that please see an example for the [file](docs/.env.example)
 
 After bot is running, it'll open a probot appilication on your `http://localhost:3000`, open the URL and follow the instruction to install the bot in your organization.
@@ -38,6 +39,7 @@ After the installation is complete, you can close the `npm start` process. Notic
 ### Running bot inside a container
 
 After the installation, you can run your bot inside a container.
+
 ```sh
 # Build container image for bot
 docker build -t <preferred-tag-name> .
@@ -49,6 +51,7 @@ docker run -d <preferred-tag-name>
 ### Running bot in Kubernetes/Openshift
 
 If you wish to run the bot on a Kubernetes platform, follow the steps.
+
 ```sh
 # Build conatiner image for bot
 docker build -t <preferred-tag-name> .

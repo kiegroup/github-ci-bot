@@ -28,7 +28,8 @@
     "lint": "eslint .",
     "prettier": "prettier -l src/** test/**/*.js",
     "lint-final": "npm run prettier && npm run lint",
-    "prepublish": "npm run lint && npm run test"
+    "prepublish": "npm run lint && npm run test",
+    "prettier-write": "prettier --write ."
   },
   "git-pre-hooks": {
     "pre-commit": "npm run prettier",
