@@ -3,7 +3,8 @@ const { getChangedFiles } = require("./utils");
 
 /**
  * checks if we need to run the Jenkins job(based to trigger only on comment) and comment the required phrase, which is defined in comments.yml
- * @param {string} context - The context from which the PR is coming from
+ * @param {Object} context - The context from which the PR is coming from
+ * @param {string} diff_url - The diff url of the respective PR
  * @returns {boolean} true/false depending on the method logic
  */
 async function isCIRequired(context, diff_url) {

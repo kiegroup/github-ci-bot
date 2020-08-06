@@ -1,4 +1,4 @@
-const label = require("../src/lib/label");
+const { addLabels } = require("../src/lib/label");
 jest.mock("../src/lib/utils");
 const { getChangedFiles: getChangedFilesMock } = require("../src/lib/utils");
 
@@ -13,11 +13,12 @@ const labels = {
 test("addLabels default reviewers", async () => {
   // Arrange
   const context = createContext(labels);
-  getChangedFilesMock.mockImplementationOnce(cntxt =>
-    cntxt === context ? ["otherfolder/file-a"] : undefined
+  const diff_url = "whatever";
+  getChangedFilesMock.mockImplementationOnce(diff =>
+    diff === diff_url ? ["otherfolder/file-a"] : undefined
   );
   // Act
-  await label.addLabels(context);
+  await addLabels(context, diff_url);
   // Assert
   expect(context.issue.mock.calls.length).toBe(1);
   expect(context.issue.mock.calls[0][0]).toStrictEqual({
@@ -32,11 +33,12 @@ test("addLabels default reviewers", async () => {
 test("addLabels label one file existing in path but the other", async () => {
   // Arrange
   const context = createContext(labels);
-  getChangedFilesMock.mockImplementationOnce(cntxt =>
-    cntxt === context ? ["test/file-a", "filex"] : undefined
+  const diff_url = "whatever";
+  getChangedFilesMock.mockImplementationOnce(diff =>
+    diff === diff_url ? ["test/file-a", "filex"] : undefined
   );
   // Act
-  await label.addLabels(context);
+  await addLabels(context, diff_url);
   // Assert
   expect(context.issue.mock.calls.length).toBe(1);
   expect(context.issue.mock.calls[0][0]).toStrictEqual({
@@ -51,11 +53,12 @@ test("addLabels label one file existing in path but the other", async () => {
 test("addLabels label both files existing in path", async () => {
   // Arrange
   const context = createContext(labels);
-  getChangedFilesMock.mockImplementationOnce(cntxt =>
-    cntxt === context ? ["test/file-a", "cmd/filex"] : undefined
+  const diff_url = "whatever";
+  getChangedFilesMock.mockImplementationOnce(diff =>
+    diff === diff_url ? ["test/file-a", "cmd/filex"] : undefined
   );
   // Act
-  await label.addLabels(context);
+  await addLabels(context, diff_url);
   // Assert
   expect(context.issue.mock.calls.length).toBe(1);
   expect(context.issue.mock.calls[0][0]).toStrictEqual({
@@ -70,11 +73,12 @@ test("addLabels label both files existing in path", async () => {
 test("addLabels label both files existing in different paths", async () => {
   // Arrange
   const context = createContext(labels);
-  getChangedFilesMock.mockImplementationOnce(cntxt =>
-    cntxt === context ? ["test/file-a", "packg/filex"] : undefined
+  const diff_url = "whatever";
+  getChangedFilesMock.mockImplementationOnce(diff =>
+    diff === diff_url ? ["test/file-a", "packg/filex"] : undefined
   );
   // Act
-  await label.addLabels(context);
+  await addLabels(context, diff_url);
   // Assert
   expect(context.issue.mock.calls.length).toBe(1);
   expect(context.issue.mock.calls[0][0]).toStrictEqual({

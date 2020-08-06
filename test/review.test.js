@@ -1,4 +1,4 @@
-const review = require("../src/lib/review");
+const { askToReview } = require("../src/lib/review");
 jest.mock("../src/lib/utils");
 const { getChangedFiles: getChangedFilesMock } = require("../src/lib/utils");
 
@@ -14,11 +14,12 @@ const reviewers = {
 test("askToReview default reviewers", async () => {
   // Arrange
   const context = createContext(reviewers);
-  getChangedFilesMock.mockImplementationOnce(cntxt =>
-    cntxt === context ? ["otherfolder/file-a"] : undefined
+  const diff_url = "whatever";
+  getChangedFilesMock.mockImplementationOnce(diff =>
+    diff === diff_url ? ["otherfolder/file-a"] : undefined
   );
   // Act
-  await review.askToReview(context);
+  await askToReview(context, diff_url, context.payload.pull_request.user.login);
   // Assert
   expect(context.issue.mock.calls.length).toBe(1);
   expect(context.issue.mock.calls[0][0]).toStrictEqual({
@@ -33,11 +34,12 @@ test("askToReview default reviewers", async () => {
 test("askToReview reviewer one file existing in path but the other", async () => {
   // Arrange
   const context = createContext(reviewers);
-  getChangedFilesMock.mockImplementationOnce(cntxt =>
-    cntxt === context ? ["test/file-a", "filex"] : undefined
+  const diff_url = "whatever";
+  getChangedFilesMock.mockImplementationOnce(diff =>
+    diff === diff_url ? ["test/file-a", "filex"] : undefined
   );
   // Act
-  await review.askToReview(context);
+  await askToReview(context, diff_url, context.payload.pull_request.user.login);
   // Assert
   expect(context.issue.mock.calls.length).toBe(1);
   expect(context.issue.mock.calls[0][0]).toStrictEqual({
@@ -52,11 +54,12 @@ test("askToReview reviewer one file existing in path but the other", async () =>
 test("askToReview reviewer both files existing in path ", async () => {
   // Arrange
   const context = createContext(reviewers);
-  getChangedFilesMock.mockImplementationOnce(cntxt =>
-    cntxt === context ? ["test/file-a", "cmd/filex"] : undefined
+  const diff_url = "whatever";
+  getChangedFilesMock.mockImplementationOnce(diff =>
+    diff === diff_url ? ["test/file-a", "cmd/filex"] : undefined
   );
   // Act
-  await review.askToReview(context);
+  await askToReview(context, diff_url, context.payload.pull_request.user.login);
   // Assert
   expect(context.issue.mock.calls.length).toBe(1);
   expect(context.issue.mock.calls[0][0]).toStrictEqual({
@@ -71,11 +74,12 @@ test("askToReview reviewer both files existing in path ", async () => {
 test("askToReview reviewer both files existing in different paths", async () => {
   // Arrange
   const context = createContext(reviewers);
-  getChangedFilesMock.mockImplementationOnce(cntxt =>
-    cntxt === context ? ["test/file-a", "packg/filex"] : undefined
+  const diff_url = "whatever";
+  getChangedFilesMock.mockImplementationOnce(diff =>
+    diff === diff_url ? ["test/file-a", "packg/filex"] : undefined
   );
   // Act
-  await review.askToReview(context);
+  await askToReview(context, diff_url, context.payload.pull_request.user.login);
   // Assert
   expect(context.issue.mock.calls.length).toBe(1);
   expect(context.issue.mock.calls[0][0]).toStrictEqual({
@@ -90,11 +94,12 @@ test("askToReview reviewer both files existing in different paths", async () => 
 test("askToReview reviewer login", async () => {
   // Arrange
   const context = createContext(reviewers);
-  getChangedFilesMock.mockImplementationOnce(cntxt =>
-    cntxt === context ? ["packg2/filex"] : undefined
+  const diff_url = "whatever";
+  getChangedFilesMock.mockImplementationOnce(diff =>
+    diff === diff_url ? ["packg2/filex"] : undefined
   );
   // Act
-  await review.askToReview(context);
+  await askToReview(context, diff_url, context.payload.pull_request.user.login);
   // Assert
   expect(context.issue.mock.calls.length).toBe(1);
   expect(context.issue.mock.calls[0][0]).toStrictEqual({

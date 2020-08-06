@@ -11,9 +11,9 @@ test("getChangedFiles", async () => {
     text: () => diffContent
   });
   fetch.mockImplementation(() => response);
-  const context = { payload: { pull_request: { diff_url: "whatever" } } };
+  const diff_url = "whatever";
   // Act
-  const result = await utils.getChangedFiles(context);
+  const result = await utils.getChangedFiles(diff_url);
   // Assert
   expect(result).toStrictEqual([
     "drools-compiler/src/main/java/org/drools/compiler/builder/InternalKnowledgeBuilder.java",
@@ -30,9 +30,9 @@ test("getChangedFiles not found", async () => {
     statusText: "Not Found"
   });
   fetch.mockImplementation(() => response);
-  const context = { payload: { pull_request: { diff_url: "whatever" } } };
+  const diff_url = "whatever";
   // Act and assert
-  await expect(utils.getChangedFiles(context)).rejects.toThrow(
+  await expect(utils.getChangedFiles(diff_url)).rejects.toThrow(
     "[ERROR] fetching whatever. Status 404. Description Not Found"
   );
 });

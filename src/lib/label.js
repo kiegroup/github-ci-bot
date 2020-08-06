@@ -3,7 +3,8 @@ const { getChangedFiles } = require("./utils");
 
 /**
  * driver function to add the labels, uses getRequiredLabels to get all required labels needed to add to the PR.
- * @param {string} context - The context from which the PR is coming from
+ * @param {Object} context - The context from which the PR is coming from
+ * @param {string} diff_url - The diff url of the respective PR
  */
 async function addLabels(context, diff_url) {
   const labelsInfo = await context.config("bot-files/labels.yml");
@@ -16,7 +17,7 @@ async function addLabels(context, diff_url) {
 
 /**
  * Calculates all the required labels needed to add to the PR.
- * @param {string} context The context from which the PR is coming from
+ * @param {string} diff_url - The diff url of the respective PR
  * @param {Object} labelsInfo - The parsed yaml defined in labels.yml
  * @returns {Array} labels to add.
  */

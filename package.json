@@ -31,7 +31,8 @@
     "prepublish": "npm run lint && npm run test"
   },
   "git-pre-hooks": {
-    "pre-commit": "npm run prettier"
+    "pre-commit": "npm run prettier",
+    "pre-push": "npm ci"
   },
   "dependencies": {
     "fetch": "^1.1.0",
