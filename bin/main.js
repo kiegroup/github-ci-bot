@@ -77,12 +77,18 @@ module.exports = app => {
   });
 
   commands(app, "bot", async (context, command) => {
-    if ("run" == command.arguments.split(/, */)) {
-      context.github.issues.removeLabel(
-        context.issue({
-          name: ["WIP :construction_worker_man:"]
-        })
-      );
+    if ("run" === command.arguments.split(/, */).toString()) {
+      if (
+        context.payload.issue.labels.find(
+          label => label.name == "WIP :construction_worker_man:"
+        )
+      ) {
+        context.github.issues.removeLabel(
+          context.issue({
+            name: ["WIP :construction_worker_man:"]
+          })
+        );
+      }
       const comments = await context.config("bot-files/comments.yml");
       if (
         await isCIRequired(context, context.payload.issue.pull_request.diff_url)
