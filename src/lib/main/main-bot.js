@@ -2,6 +2,10 @@ const { askToReview } = require("../review");
 const { addLabels } = require("../label");
 const { isCIRequired } = require("../ci");
 
+/**
+ * The function defines the steps when /bot run is commented on the PR
+ * @param {Obejct} context - The context from which the PR is coming from
+ */
 async function run(context) {
   if (
     context.payload.issue.labels.find(
