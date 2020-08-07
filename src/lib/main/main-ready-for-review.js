@@ -25,6 +25,24 @@ async function pullRequestOpened(context) {
 }
 
 /**
+ * Defines the flow when a PR is marked as ready-for-review from draft
+ * @param {Object} context - The context from which the PR is coming from
+ */
+async function pullRequestReadyForReview(context){
+  if (
+    context.payload.pull_request.labels.find(
+      label => label.name == "WIP :construction_worker_man:"
+    )
+  ) {
+    context.github.issues.removeLabel(
+      context.issue({
+        name: ["WIP :construction_worker_man:"]
+      })
+    );
+  }
+  commonTasks(context, "bot-files/comments.yml", "whatev", false);
+}
+/**
  * Defines the flow when a PR is Changed in review
  * @param {Object} context - The context from which the PR is coming from
  */
@@ -63,5 +81,6 @@ async function commonTasks(context, commentsFile, commentField, shouldComment) {
 module.exports = {
   pullRequestReopened,
   pullRequestOpened,
-  pullRequestChanged
+  pullRequestChanged,
+  pullRequestReadyForReview
 };

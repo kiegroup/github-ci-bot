@@ -23,7 +23,7 @@ async function pullRequestReopened() {
  * @param {Obejct} context - The context from which the PR is coming from
  */
 async function pullRequestChanged() {
-  console.log("no pull request reopened for draft");
+  console.log("no pull request changed for draft");
 }
 
 module.exports = {
