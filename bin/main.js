@@ -1,5 +1,4 @@
 const { getDelegate } = require("../src/lib/main/delegator");
-const commands = require("probot-commands");
 /**
  * This is the main entrypoint to your Probot app
  * @param {import('probot').Application} app
