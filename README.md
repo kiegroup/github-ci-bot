@@ -1,8 +1,8 @@
-# kie-github-ci-bot
+# kie-ci-bot
 
 > A GitHub App built with [Probot](https://github.com/probot/probot) that A Probot app
 
-kie-github-ci-bot is a simple bot which was created to automate few tasks done manually till now.
+kie-ci-bot is a simple bot which was created to automate few tasks done manually till now.
 
 - Ask for reviewers based on the changed files
 - Add labels to PR depending on the changed files
@@ -65,7 +65,7 @@ kubectl create deployment <your-bot-deployment-name> --image=<preferred-tag-name
 
 ## Contributing
 
-If you have suggestions for how kie-github-ci-bot could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
+If you have suggestions for how kie-ci-bot could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
 
 For more, check out the [Contributing Guide](CONTRIBUTING.md).
 
