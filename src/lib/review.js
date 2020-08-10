@@ -33,9 +33,9 @@ async function getPossibleReviewers(reviewersInfo, diff_url, user) {
     .flatMap(pathReview => pathReview.reviewers)
     .reduce((acc, reviewer) => acc.add(reviewer), new Set());
 
-  return reviewersInfo.default
-    .concat(Array.from(pathReviewersSet))
-    .filter(reviewer => reviewer !== user);
+  return pathReviewersSet.size > 0
+    ? Array.from(pathReviewersSet).filter(reviewer => reviewer !== user)
+    : reviewersInfo.default.filter(reviewer => reviewer !== user);
 }
 
 module.exports = {

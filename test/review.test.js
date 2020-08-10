@@ -43,7 +43,7 @@ test("askToReview reviewer one file existing in path but the other", async () =>
   // Assert
   expect(context.issue.mock.calls.length).toBe(1);
   expect(context.issue.mock.calls[0][0]).toStrictEqual({
-    reviewers: ["default1", "default2", "rw-a", "rw-b"]
+    reviewers: ["rw-a", "rw-b"]
   });
   expect(context.github.pulls.createReviewRequest.mock.calls.length).toBe(1);
   expect(
@@ -63,7 +63,7 @@ test("askToReview reviewer both files existing in path ", async () => {
   // Assert
   expect(context.issue.mock.calls.length).toBe(1);
   expect(context.issue.mock.calls[0][0]).toStrictEqual({
-    reviewers: ["default1", "default2", "rw-a", "rw-b"]
+    reviewers: ["rw-a", "rw-b"]
   });
   expect(context.github.pulls.createReviewRequest.mock.calls.length).toBe(1);
   expect(
@@ -83,7 +83,7 @@ test("askToReview reviewer both files existing in different paths", async () => 
   // Assert
   expect(context.issue.mock.calls.length).toBe(1);
   expect(context.issue.mock.calls[0][0]).toStrictEqual({
-    reviewers: ["default1", "default2", "rw-a", "rw-b", "rw-c", "rw-d"]
+    reviewers: ["rw-a", "rw-b", "rw-c", "rw-d"]
   });
   expect(context.github.pulls.createReviewRequest.mock.calls.length).toBe(1);
   expect(
@@ -103,7 +103,7 @@ test("askToReview reviewer login", async () => {
   // Assert
   expect(context.issue.mock.calls.length).toBe(1);
   expect(context.issue.mock.calls[0][0]).toStrictEqual({
-    reviewers: ["default1", "default2", "rw-e"]
+    reviewers: ["rw-e"]
   });
   expect(context.github.pulls.createReviewRequest.mock.calls.length).toBe(1);
   expect(
