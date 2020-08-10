@@ -9,9 +9,9 @@ RUN curl -L https://nodejs.org/dist/${node_version}/node-${node_version}-linux-x
 
 ENV PATH=/root/node-${node_version}-linux-x64/bin:$PATH
 
-COPY . /kie-github-ci-bot/
+COPY . /kie-ci-bot/
 
-WORKDIR /kie-github-ci-bot/ 
+WORKDIR /kie-ci-bot/ 
 
 RUN npm install
 
