@@ -32,7 +32,7 @@ npm start
 
 **Note**: On the initial setup the bot creates a `.env` file in your project root which has all the secrets and webhook required for your bot to work with github. However you can create that file yourself. For that please see an example for the [file](docs/.env.example)
 
-After bot is running, it'll open a probot appilication on your `http://localhost:3000`, open the URL and follow the instruction to install the bot in your organization.
+After bot is running, it'll open a probot application on your `http://localhost:3000`, open the URL and follow the instruction to install the bot in your organization.
 
 After the installation is complete, you can close the `npm start` process. Notice the `.env` file is automatically created in your project root with all the required values. After this you start your bot with `npm run dev` which'll start the bot in the developement mode.
 
