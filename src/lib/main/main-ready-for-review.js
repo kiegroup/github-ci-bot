@@ -75,12 +75,22 @@ async function commonTasks(context, commentsFile, commentField, shouldComment) {
     );
   }
 
+  await addLabels(context, context.payload.pull_request.diff_url);
+
+  await sleep(5000);
+
   if (await isCIRequired(context, context.payload.pull_request.diff_url)) {
     context.github.issues.createComment(
       context.issue({ body: comments.prCiTrigger })
     );
   }
-  await addLabels(context, context.payload.pull_request.diff_url);
+}
+/**
+ * The function will pause the execution for the specified milli seconds.
+ * @param {int} ms - The time to sleep in milli-second
+ */
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 module.exports = {
