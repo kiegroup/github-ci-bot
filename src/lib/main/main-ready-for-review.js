@@ -16,6 +16,11 @@ async function pullRequestReopened(context) {
  * @param {Object} context - The context from which the PR is coming from
  */
 async function pullRequestOpened(context) {
+  await askToReview(
+    context,
+    context.payload.pull_request.diff_url,
+    context.payload.pull_request.user.login
+  );
   commonTasks(
     context,
     "bot-files/comments.yml",
@@ -40,6 +45,11 @@ async function pullRequestReadyForReview(context) {
       })
     );
   }
+  await askToReview(
+    context,
+    context.payload.pull_request.diff_url,
+    context.payload.pull_request.user.login
+  );
   commonTasks(context, "bot-files/comments.yml", "whatev", false);
 }
 /**
@@ -70,11 +80,6 @@ async function commonTasks(context, commentsFile, commentField, shouldComment) {
       context.issue({ body: comments.prCiTrigger })
     );
   }
-  await askToReview(
-    context,
-    context.payload.pull_request.diff_url,
-    context.payload.pull_request.user.login
-  );
   await addLabels(context, context.payload.pull_request.diff_url);
 }
 
