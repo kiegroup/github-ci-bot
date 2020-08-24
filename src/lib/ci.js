@@ -19,8 +19,6 @@ async function isCIRequired(context, diff_url) {
           changedFiles.find(changedFile => fileExpr.test(changedFile))
         ) !== undefined
     );
-  } else {
-    return false;
   }
 }
 
