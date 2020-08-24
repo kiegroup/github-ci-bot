@@ -9,7 +9,7 @@ const { getChangedFiles } = require("./utils");
  */
 async function isCIRequired(context, diff_url) {
   const triggerPaths = await context.config("bot-files/paths.yml");
-  if (triggerPaths !== null) {
+  if (triggerPaths) {
     const changedFiles = await getChangedFiles(diff_url);
 
     return (

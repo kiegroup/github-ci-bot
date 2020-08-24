@@ -45,7 +45,7 @@ test("is CI required false", async () => {
 test("isCIRequired paths file not defined", async () => {
   //Arrange
   const context = {
-    config: jest.fn(path => (path === "bot-files/paths.yml" ? null : undefined))
+    config: jest.fn(() => null)
   };
   const diff_url = "whatever";
   getChangedFilesMock.mockImplementationOnce(diff =>
