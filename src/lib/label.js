@@ -22,16 +22,20 @@ async function addLabels(context, diff_url) {
  * @returns {Array} labels to add.
  */
 async function getRequiredLables(diff_url, labelsInfo) {
-  const changedFiles = await getChangedFiles(diff_url);
-  const pathLabelsSet = labelsInfo.labels
-    .filter(labelPath =>
-      labelPath.paths
-        .map(path => globToRegExp(path))
-        .find(re => changedFiles.find(file => re.test(file)))
-    )
-    .flatMap(pathLabel => pathLabel.labels)
-    .reduce((acc, label) => acc.add(label), new Set());
-  return labelsInfo.default.concat(Array.from(pathLabelsSet));
+  if (labelsInfo.labels !== undefined) {
+    const changedFiles = await getChangedFiles(diff_url);
+    const pathLabelsSet = labelsInfo.labels
+      .filter(labelPath =>
+        labelPath.paths
+          .map(path => globToRegExp(path))
+          .find(re => changedFiles.find(file => re.test(file)))
+      )
+      .flatMap(pathLabel => pathLabel.labels)
+      .reduce((acc, label) => acc.add(label), new Set());
+    return labelsInfo.default.concat(Array.from(pathLabelsSet));
+  } else {
+    return labelsInfo.default;
+  }
 }
 
 module.exports = {

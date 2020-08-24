@@ -90,6 +90,30 @@ test("addLabels label both files existing in different paths", async () => {
   );
 });
 
+test("addLabels only default is defined", async () => {
+  //Arrange
+  const label = {
+    default: ["default1", "default2"]
+  };
+  const context = createContext(label);
+  const diff_url = "whatever";
+  getChangedFilesMock.mockImplementationOnce(diff =>
+    diff === diff_url ? ["any-dir/any-file"] : undefined
+  );
+  // Act
+  await addLabels(context, diff_url);
+
+  // Assert
+  expect(context.issue.mock.calls.length).toBe(1);
+  expect(context.issue.mock.calls[0][0]).toStrictEqual({
+    labels: ["default1", "default2"]
+  });
+  expect(context.github.issues.addLabels.mock.calls.length).toBe(1);
+  expect(context.github.issues.addLabels.mock.calls[0][0]).toStrictEqual(
+    "issue"
+  );
+});
+
 function createContext(labels) {
   return {
     config: jest.fn(path =>

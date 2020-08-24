@@ -111,6 +111,30 @@ test("askToReview reviewer login", async () => {
   ).toStrictEqual("issue");
 });
 
+test("askToReview only default reviewers are present", async () => {
+  //arrange
+  const reviewrs = {
+    default: ["default1", "default2", "login"]
+  };
+  const context = createContext(reviewrs);
+  const diff_url = "whatever";
+  getChangedFilesMock.mockImplementationOnce(diff =>
+    diff === diff_url ? ["anydir/anyfile"] : undefined
+  );
+
+  // Act
+  await askToReview(context, diff_url, context.payload.pull_request.user.login);
+
+  // Assert
+  expect(context.issue.mock.calls.length).toBe(1);
+  expect(context.issue.mock.calls[0][0]).toStrictEqual({
+    reviewers: ["default1", "default2"]
+  });
+  expect(context.github.pulls.createReviewRequest.mock.calls.length).toBe(1);
+  expect(
+    context.github.pulls.createReviewRequest.mock.calls[0][0]
+  ).toStrictEqual("issue");
+});
 function createContext(reviewers) {
   return {
     config: jest.fn(path =>

@@ -23,19 +23,23 @@ async function askToReview(context, diff_url, user) {
  * @returns {Array} All the required reviewers
  */
 async function getPossibleReviewers(reviewersInfo, diff_url, user) {
-  const changedFiles = await getChangedFiles(diff_url);
-  const pathReviewersSet = reviewersInfo.review
-    .filter(reviewPath =>
-      reviewPath.paths
-        .map(path => globToRegExp(path))
-        .find(re => changedFiles.find(file => re.test(file)))
-    )
-    .flatMap(pathReview => pathReview.reviewers)
-    .reduce((acc, reviewer) => acc.add(reviewer), new Set());
+  if (reviewersInfo.review !== undefined) {
+    const changedFiles = await getChangedFiles(diff_url);
+    const pathReviewersSet = reviewersInfo.review
+      .filter(reviewPath =>
+        reviewPath.paths
+          .map(path => globToRegExp(path))
+          .find(re => changedFiles.find(file => re.test(file)))
+      )
+      .flatMap(pathReview => pathReview.reviewers)
+      .reduce((acc, reviewer) => acc.add(reviewer), new Set());
 
-  return pathReviewersSet.size > 0
-    ? Array.from(pathReviewersSet).filter(reviewer => reviewer !== user)
-    : reviewersInfo.default.filter(reviewer => reviewer !== user);
+    return pathReviewersSet.size > 0
+      ? Array.from(pathReviewersSet).filter(reviewer => reviewer !== user)
+      : reviewersInfo.default.filter(reviewer => reviewer !== user);
+  } else {
+    return reviewersInfo.default.filter(reviewer => reviewer !== user);
+  }
 }
 
 module.exports = {
