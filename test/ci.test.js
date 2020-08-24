@@ -48,9 +48,6 @@ test("isCIRequired paths file not defined", async () => {
     config: jest.fn(() => null)
   };
   const diff_url = "whatever";
-  getChangedFilesMock.mockImplementationOnce(diff =>
-    diff === diff_url ? ["anydir/anyfile"] : undefined
-  );
   // Act
   const result = await isCIRequired(context, diff_url);
   // Assert
