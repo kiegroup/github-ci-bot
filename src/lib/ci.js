@@ -9,15 +9,19 @@ const { getChangedFiles } = require("./utils");
  */
 async function isCIRequired(context, diff_url) {
   const triggerPaths = await context.config("bot-files/paths.yml");
-  const changedFiles = await getChangedFiles(diff_url);
+  if (triggerPaths !== null) {
+    const changedFiles = await getChangedFiles(diff_url);
 
-  return (
-    triggerPaths.files
-      .map(file => globToRegExp(file))
-      .find(fileExpr =>
-        changedFiles.find(changedFile => fileExpr.test(changedFile))
-      ) !== undefined
-  );
+    return (
+      triggerPaths.files
+        .map(file => globToRegExp(file))
+        .find(fileExpr =>
+          changedFiles.find(changedFile => fileExpr.test(changedFile))
+        ) !== undefined
+    );
+  } else {
+    return false;
+  }
 }
 
 module.exports = {
