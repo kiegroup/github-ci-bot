@@ -40,7 +40,7 @@
     "git-diff-parser": "^1.0.0",
     "glob-to-regexp": "^0.4.1",
     "js-yaml": "^3.14.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "parse-diff": "^0.7.0",
     "probot": "^9.5.3",
     "probot-commands": "^1.1.0"
