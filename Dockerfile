@@ -1,18 +1,15 @@
-FROM registry.access.redhat.com/ubi8/ubi
-
-ARG node_version=v12.18.2
-
-RUN yum install xz python3 make -y
-
-RUN curl -L https://nodejs.org/dist/${node_version}/node-${node_version}-linux-x64.tar.xz  -o node-${node_version}-linux-x64.tar.xz && \
-    tar -C /root/ -xf node-${node_version}-linux-x64.tar.xz
-
-ENV PATH=/root/node-${node_version}-linux-x64/bin:$PATH
+FROM docker.io/node:12.18.2-alpine
 
 COPY . /kie-ci-bot/
+
+RUN chown 1001:1001 -R /kie-ci-bot/
+
+RUN mkdir /.npm && chown -R 1001:0 "/.npm"
+RUN  mkdir /.config && chown -R 1001:1001 /.config
+USER 1001
 
 WORKDIR /kie-ci-bot/ 
 
 RUN npm install
 
-ENTRYPOINT npm start
+ENTRYPOINT ["npm","start"]
